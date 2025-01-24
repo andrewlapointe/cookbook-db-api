@@ -28,4 +28,19 @@ controller.addUser = async function (
     return data.rows[0];
 };
 
+controller.deleteUser = async function (id) {
+    const response = await pool.query(sql.deleteUser, [id]);
+    return response;
+};
+
+controller.editUser = async function (reqBody) {
+    const { id, username, email } = reqBody;
+    if (this.getUserById(id)) {
+        await pool.query(sql.updateUser, [username, email, id]);
+        return 'User updated.';
+    } else {
+        return 'User does not exist';
+    }
+};
+
 module.exports = controller;

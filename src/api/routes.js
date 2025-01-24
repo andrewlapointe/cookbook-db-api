@@ -26,4 +26,23 @@ router.post('/user/new', async (req, res) => {
     res.send(data);
 });
 
+// Delete User
+router.delete('/user/delete', async (req, res) => {
+    const { id } = req.body;
+
+    if (await controller.getUserById(id)) {
+        const data = await controller.deleteUser(id);
+        res.send(`Deleted user ${id}`);
+    } else {
+        res.send('User does not exist.');
+    }
+});
+
+router.put('/user/edit', async (req, res) => {
+    const body = req.body;
+
+    const response = await controller.editUser(body);
+    res.send(response);
+});
+
 module.exports = router;

@@ -15,6 +15,7 @@ ORDER BY u.id;`;
 queries.selectUserById = `SELECT 
     u.id,
     u.username,
+    u.email,
     ARRAY_AGG(r.role_name) AS roles
 FROM users u
 LEFT JOIN user_roles ur 
@@ -37,5 +38,13 @@ WHERE role_name = $4
 INSERT INTO user_roles (user_id, role_id) 
 SELECT new_user.id, role.role_id 
 FROM new_user, role;`;
+
+queries.deleteUser = `DELETE FROM users WHERE id=$1`;
+
+queries.updateUser = `
+UPDATE users
+SET username = $1, email = $2
+WHERE id = $3;
+`;
 
 module.exports = queries;
