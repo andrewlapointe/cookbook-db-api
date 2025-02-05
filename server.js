@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const route = require('./src/api/routes');
 const env = require('dotenv').config();
