@@ -8,6 +8,15 @@ controller.getAllUsers = async function () {
     return data.rows;
 };
 
+controller.checkForEmail = async function (email) {
+    const data = await pool.query(sql.checkForEmail, [email]);
+    if (data.rows[0].email_exists) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
 controller.getUserById = async function (id) {
     const data = await pool.query(sql.selectUserById, [id]);
     return data.rows;
@@ -25,6 +34,7 @@ controller.addUser = async function (
         password_hash,
         role,
     ]);
+    console.log(data);
     return data.rows[0];
 };
 

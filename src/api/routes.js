@@ -1,20 +1,26 @@
 const express = require('express');
 const router = new express.Router();
 const controller = require('./controller');
+const utilities = require('../../utilities/index');
 
 router.get('', (req, res) => {
     res.send('Welcome to my API');
 });
 
 // Get all users
-router.get('/user/all', async (req, res) => {
+router.get('/user/all', utilities.checkJWTToken, async (req, res) => {
     // Update SQL to include user privilege
     const data = await controller.getAllUsers();
     res.send(data);
 });
 
+// Check if user exits by email
+router.get('/user/:email', async (req, res) => {
+    res.send(await controller.checkForEmail(req.params.email));
+});
+
 // Get a specific user
-router.get('/user/:id', async (req, res) => {
+router.get('/user/:id', utilities.checkJWTToken, async (req, res) => {
     const data = await controller.getUserById(req.params.id);
     res.send(data);
 });
@@ -27,7 +33,9 @@ router.post('/user/new', async (req, res) => {
 });
 
 // Delete User
-router.delete('/user/delete', async (req, res) => {
+// ADD CHECK FOR ADMIN
+router.delete('/user/delete', utilities.checkJWTToken, async (req, res) => {
+    // Update to move logic to controller
     const { id } = req.body;
 
     if (await controller.getUserById(id)) {
@@ -38,7 +46,7 @@ router.delete('/user/delete', async (req, res) => {
     }
 });
 
-router.put('/user/edit', async (req, res) => {
+router.put('/user/edit', utilities.checkJWTToken, async (req, res) => {
     const body = req.body;
 
     const response = await controller.editUser(body);
