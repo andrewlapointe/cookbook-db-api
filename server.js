@@ -22,7 +22,7 @@ app.use(
 );
 app.use(bodyParser.json());
 
-app.use('/api', route);
+app.use('/', route);
 
 const port = process.env.PORT;
 const host = process.env.HOST;
