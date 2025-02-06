@@ -8,13 +8,23 @@ controller.getAllUsers = async function () {
     return data.rows;
 };
 
-controller.checkForEmail = async function (email) {
-    const data = await pool.query(sql.checkForEmail, [email]);
-    if (data.rows[0].email_exists) {
-        return true;
+controller.checkForUser = async function (email, username) {
+    const userCheck = {};
+    const emailCheck = await pool.query(sql.checkForEmail, [email]);
+    if (emailCheck.rows[0].email_exists) {
+        userCheck.emailExists = true;
     } else {
-        return false;
+        userCheck.emailExists = false;
     }
+
+    const usernameCheck = await pool.query(sql.checkForUsername, [username]);
+    if (usernameCheck.rows[0].username_exists) {
+        userCheck.usernameExists = true;
+    } else {
+        userCheck.usernameExists = false;
+    }
+
+    return userCheck;
 };
 
 controller.getUserById = async function (id) {
