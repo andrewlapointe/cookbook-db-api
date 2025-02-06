@@ -21,6 +21,14 @@ SELECT EXISTS (
   ) AS email_exists;
 `;
 
+queries.checkForUsername = `
+SELECT EXISTS (
+  SELECT 1
+  FROM users
+  WHERE username=$1
+  ) AS username_exists;
+`;
+
 queries.selectUserByEmail = `SELECT 
     u.id,
     u.username,
