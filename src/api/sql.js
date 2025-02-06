@@ -21,7 +21,7 @@ SELECT EXISTS (
   ) AS email_exists;
 `;
 
-queries.selectUserById = `SELECT 
+queries.selectUserByEmail = `SELECT 
     u.id,
     u.username,
     u.email,
@@ -31,7 +31,7 @@ LEFT JOIN user_roles ur
 ON u.id = ur.user_id
 LEFT JOIN roles r
 ON ur.role_id = r.role_id
-WHERE u.id = $1
+WHERE u.email = $1
 GROUP BY u.id, u.username
 ORDER BY u.id;`;
 

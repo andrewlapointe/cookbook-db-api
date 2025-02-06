@@ -20,8 +20,8 @@ router.get('/user/:email', async (req, res) => {
 });
 
 // Get a specific user
-router.get('/user/:id', utilities.checkJWTToken, async (req, res) => {
-    const data = await controller.getUserById(req.params.id);
+router.get('/user/:email', async (req, res) => {
+    const data = await controller.getUserById(req.params.email);
     res.send(data);
 });
 
