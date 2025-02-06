@@ -15,7 +15,7 @@ router.get('/user/all', utilities.checkJWTToken, async (req, res) => {
 });
 
 // Check if user exits by email
-router.get('/user/:email', async (req, res) => {
+router.get('/checkuser/:email', async (req, res) => {
     res.send(await controller.checkForEmail(req.params.email));
 });
 
