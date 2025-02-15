@@ -32,6 +32,11 @@ controller.getUserById = async function (id) {
     return data.rows;
 };
 
+controller.getUserByEmail = async function (email) {
+    const data = await pool.query(sql.selectUserByEmail, [email]);
+    return data.rows;
+};
+
 controller.addUser = async function (
     username,
     email,
