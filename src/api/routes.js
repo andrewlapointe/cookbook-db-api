@@ -23,7 +23,7 @@ router.get('/checkuser/:email/:username', async (req, res) => {
 
 // Get a specific user
 router.get('/user/:email', async (req, res) => {
-    const data = await controller.getUserById(req.params.email);
+    const data = await controller.getUserByEmail(req.params.email);
     res.send(data);
 });
 
