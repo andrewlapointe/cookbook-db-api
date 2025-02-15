@@ -33,6 +33,7 @@ queries.selectUserByEmail = `SELECT
     u.id,
     u.username,
     u.email,
+    u.password_hash,
     ARRAY_AGG(r.role_name) AS roles
 FROM users u
 LEFT JOIN user_roles ur 
