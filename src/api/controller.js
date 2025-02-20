@@ -3,6 +3,8 @@ const pool = require('../../database');
 
 const controller = {};
 
+// USERS TABLE ==========================================
+
 controller.getAllUsers = async function () {
     const data = await pool.query(sql.selectAllUsers);
     return data.rows;
@@ -66,6 +68,74 @@ controller.editUser = async function (reqBody) {
     } else {
         return 'User does not exist';
     }
+};
+
+// RECIPES TABLE ===========================================
+
+controller.getAllRecipes = async function () {
+    const data = await pool.query(sql.selectAllRecipes);
+    return data;
+};
+
+controller.getRecipeById = async function (req) {
+    const id = req.body.id;
+    const data = await pool.query(sql.selectRecipeByID);
+    return data;
+};
+
+controller.addRecipe = async function (req) {
+    const {
+        userId,
+        recipeName,
+        description,
+        ingredients,
+        instructions,
+        cookTime,
+        servings,
+        imageURL,
+        author,
+    } = req.body;
+    const data = await pool.query(sql.addRecipe, [
+        userId,
+        recipeName,
+        description,
+        ingredients,
+        instructions,
+        cookTime,
+        servings,
+        imageURL,
+        author,
+    ]);
+    return data;
+};
+
+controller.deleteRecipe = async function (req) {
+    const { recipeId } = req.body;
+    const data = await pool.query(sql.deleteRecipe, [recipeId]);
+    return data;
+};
+
+controller.editRecipe = async function (req) {
+    const {
+        recipeName,
+        description,
+        ingredients,
+        instructions,
+        cookTime,
+        servings,
+        imageURL,
+        author,
+    } = req.body;
+    const data = await pool.query(sql.updateRecipe, [
+        recipeName,
+        description,
+        ingredients,
+        instructions,
+        cookTime,
+        servings,
+        imageURL,
+        author,
+    ]);
 };
 
 module.exports = controller;

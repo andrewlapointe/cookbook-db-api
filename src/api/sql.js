@@ -85,7 +85,7 @@ WHERE id = $1;
 
 queries.addRecipe = `
 INSERT INTO recipes
-(user_id, title, description, ingredients, instructions, cooing_time, servings, image_url, author)
+(user_id, title, description, ingredients, instructions, cooking_time, servings, image_url, author)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
 `;
 
@@ -95,7 +95,7 @@ DELETE FROM recipes WHERE id=$1;
 
 queries.updateRecipe = `
 UPDATE recipes
-SET title = $1, description = $2, ingredients = $3, instructions = $4, cooing_time = $5, servings = $6, image_url = $7, author = $8
+SET title = $1, description = $2, ingredients = $3, instructions = $4, cooking_time = $5, servings = $6, image_url = $7, author = $8
 WHERE id = $9
 `;
 // =======================================================================

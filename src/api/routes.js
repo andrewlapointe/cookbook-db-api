@@ -55,4 +55,32 @@ router.put('/user/edit', utilities.checkJWTToken, async (req, res) => {
     res.send(response);
 });
 
+// RECIPE TABLE
+
+router.get('/recipe/all', async (req, res) => {
+    const data = await controller.getAllRecipes();
+    return data;
+});
+
+router.get('/recipe/:id', async (req, res) => {
+    const data = await controller.getRecipeById(req);
+    return data;
+});
+
+router.post('/recipe/new', utilities.checkJWTToken, async (req, res) => {
+    const data = await controller.addRecipe(req);
+    res.send(data);
+});
+
+// ADD CHECK FOR ADMIN
+router.delete('/recipe/delete', utilities.checkJWTToken, async (req, res) => {
+    const data = await controller.deleteRecipe(req);
+    return data;
+});
+
+router.put('/recipe/edit', utilities.checkJWTToken, async (req, res) => {
+    const data = await controller.editRecipe(req);
+    return data;
+});
+
 module.exports = router;
