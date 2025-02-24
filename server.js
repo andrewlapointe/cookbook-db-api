@@ -24,8 +24,9 @@ app.use(bodyParser.json());
 
 app.use(
     '/',
-    () => {
+    (req, res, next) => {
         console.log('Request Received');
+        next();
     },
     route
 );
