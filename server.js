@@ -26,7 +26,7 @@ app.use(
     '/',
     (req, res, next) => {
         console.log('Request Received');
-        console.log(req.headers);
+        console.log(req);
         next();
     },
     route
