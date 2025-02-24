@@ -59,7 +59,7 @@ router.put('/user/edit', utilities.checkJWTToken, async (req, res) => {
 
 router.get('/recipe/all', async (req, res) => {
     const data = await controller.getAllRecipes();
-    return data;
+    res.send(data);
 });
 
 router.get('/recipe/:id', async (req, res) => {
