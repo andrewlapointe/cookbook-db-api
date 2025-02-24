@@ -6,7 +6,10 @@ const route = require('./src/api/routes');
 const env = require('dotenv').config();
 const pool = require('./database');
 const { Pool } = require('pg');
+const helmet = require('helmet');
 const app = express();
+
+app.use(helmet);
 
 app.use(
     session({
