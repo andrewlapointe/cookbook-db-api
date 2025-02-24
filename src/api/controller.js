@@ -78,7 +78,7 @@ controller.getAllRecipes = async function () {
 };
 
 controller.getRecipeById = async function (req) {
-    const id = req.body.id;
+    const id = req.params.id;
     const data = await pool.query(sql.selectRecipeByID);
     return data;
 };
