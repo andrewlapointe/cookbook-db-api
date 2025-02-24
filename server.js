@@ -22,7 +22,7 @@ app.use(
 );
 app.use(bodyParser.json());
 
-app.use('/', route);
+app.use('/', console.log('Request Received'), route);
 
 const port = process.env.PORT;
 const host = process.env.HOST;

@@ -3,7 +3,7 @@ require('dotenv').config();
 const Util = {};
 
 Util.checkJWTToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
+    const token = req.headers['authorization'];
 
     if (token == null) return res.sendStatus(401);
 
