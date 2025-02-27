@@ -67,6 +67,11 @@ router.get('/recipe/:id', async (req, res) => {
     res.send(data);
 });
 
+router.get('/recipe/user/:id', async (req, res) => {
+    const data = await controller.getRecipesByUser();
+    res.send(data);
+});
+
 router.post('/recipe/new', utilities.checkJWTToken, async (req, res) => {
     const data = await controller.addRecipe(req);
     res.send(data);

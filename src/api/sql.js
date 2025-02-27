@@ -83,6 +83,13 @@ FROM recipes
 WHERE id = $1;
 `;
 
+queries.selectRecipesByUser = `
+SELECT *
+FROM recipes
+WHERE user_id = $1
+LIMIT 1000;
+`;
+
 queries.addRecipe = `
 INSERT INTO recipes
 (user_id, title, description, ingredients, instructions, cooking_time, servings, image_url, author)
