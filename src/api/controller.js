@@ -116,6 +116,7 @@ controller.addRecipe = async function (req) {
 };
 
 controller.deleteRecipe = async function (req) {
+    console.log(req.body);
     const { recipeId } = req.body;
     const data = await pool.query(sql.deleteRecipe, [recipeId]);
     return data;
