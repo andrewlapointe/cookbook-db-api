@@ -68,7 +68,7 @@ router.get('/recipe/:id', async (req, res) => {
 });
 
 router.get('/recipe/user/:id', async (req, res) => {
-    const data = await controller.getRecipesByUser();
+    const data = await controller.getRecipesByUser(req);
     res.send(data);
 });
 
