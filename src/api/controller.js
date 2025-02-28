@@ -132,6 +132,7 @@ controller.editRecipe = async function (req) {
         servings,
         imageURL,
         author,
+        id,
     } = req.body;
     const data = await pool.query(sql.updateRecipe, [
         recipeName,
@@ -142,6 +143,7 @@ controller.editRecipe = async function (req) {
         servings,
         imageURL,
         author,
+        id,
     ]);
 };
 
