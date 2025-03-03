@@ -80,6 +80,15 @@ FROM recipes;
 queries.selectRecipeByID = `
 SELECT *
 FROM recipes
+WHERE title % $1 OR description % $1
+ORDER BY
+  GREATEST(similarity(title, $1), similarity(description, $1)) DESC
+LIMIT 50;
+`;
+
+queries.selectRecipeByID = `
+SELECT *
+FROM recipes
 WHERE id = $1;
 `;
 

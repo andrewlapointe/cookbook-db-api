@@ -62,6 +62,11 @@ router.get('/recipe/all', async (req, res) => {
     res.send(data);
 });
 
+router.get('/recipe/search/:query', async (req, res) => {
+    const data = await controller.getRecipeSearch(req);
+    res.send(data);
+});
+
 router.get('/recipe/:id', async (req, res) => {
     const data = await controller.getRecipeById(req);
     res.send(data);

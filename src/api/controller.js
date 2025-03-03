@@ -77,6 +77,11 @@ controller.getAllRecipes = async function () {
     return data;
 };
 
+controller.getRecipeSearch = async function (req) {
+    const data = await pool.query(sql.selectRecipeSearch, [req.params.query]);
+    return data;
+};
+
 controller.getRecipeById = async function (req) {
     const id = req.params.id;
     const data = await pool.query(sql.selectRecipeByID, [id]);
