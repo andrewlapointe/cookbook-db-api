@@ -77,7 +77,7 @@ SELECT *
 FROM recipes;
 `;
 
-queries.selectRecipeByID = `
+queries.selectRecipeSearch = `
 SELECT *
 FROM recipes
 WHERE title % $1 OR description % $1
