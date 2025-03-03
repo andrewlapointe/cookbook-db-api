@@ -83,8 +83,8 @@ controller.getRecipeSearch = async function (req) {
 };
 
 controller.getRecipeById = async function (req) {
-    const id = req.params.id;
-    const data = await pool.query(sql.selectRecipeByID, [id]);
+    const q = req.params.query;
+    const data = await pool.query(sql.selectRecipeByID, [q]);
     return data;
 };
 
