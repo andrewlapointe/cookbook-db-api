@@ -15,10 +15,12 @@ router.get('/user/all', utilities.checkJWTToken, async (req, res) => {
 });
 
 // Check if user exits by email
-router.get('/checkuser/:email/:username', async (req, res) => {
-    res.send(
-        await controller.checkForUser(req.params.email, req.params.username)
-    );
+router.get('/checkuser/:email/', async (req, res) => {
+    res.send(await controller.checkForUserEmail(req.params.email));
+});
+
+router.get('/checkuser/:username', async (req, res) => {
+    res.send(await controller.checkForUserUsername(req.params.username));
 });
 
 // Get a specific user

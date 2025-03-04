@@ -11,22 +11,24 @@ controller.getAllUsers = async function () {
 };
 
 controller.checkForUser = async function (email, username) {
-    const userCheck = {};
+    const checkEmail = {};
     const emailCheck = await pool.query(sql.checkForEmail, [email]);
     if (emailCheck.rows[0].email_exists) {
-        userCheck.emailExists = true;
+        checkEmail.emailExists = true;
     } else {
-        userCheck.emailExists = false;
+        checkEmail.emailExists = false;
     }
+    return checkEmail;
+};
 
+controller.checkForUserUsername = async function (username) {
+    checkUsername = {};
     const usernameCheck = await pool.query(sql.checkForUsername, [username]);
-    if (usernameCheck.rows[0].username_exists) {
-        userCheck.usernameExists = true;
+    if (usernameCheck.rows[0].usernameExists) {
+        checkUsername.usernameExists = true;
     } else {
-        userCheck.usernameExists = false;
+        checkUsername.usernameExists = false;
     }
-
-    return userCheck;
 };
 
 controller.getUserById = async function (id) {

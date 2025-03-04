@@ -29,6 +29,7 @@ app.use(
     '/',
     (req, res, next) => {
         console.log('Request Received');
+        console.log(req.body);
         next();
     },
     route
