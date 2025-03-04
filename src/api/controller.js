@@ -24,7 +24,7 @@ controller.checkForUserEmail = async function (email, username) {
 controller.checkForUserUsername = async function (username) {
     checkUsername = {};
     const usernameCheck = await pool.query(sql.checkForUsername, [username]);
-    if (usernameCheck.rows[0].usernameExists) {
+    if (usernameCheck.rows[0].username_exists) {
         checkUsername.usernameExists = true;
     } else {
         checkUsername.usernameExists = false;
