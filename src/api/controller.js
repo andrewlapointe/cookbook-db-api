@@ -10,7 +10,7 @@ controller.getAllUsers = async function () {
     return data.rows;
 };
 
-controller.checkForUser = async function (email, username) {
+controller.checkForUserEmail = async function (email, username) {
     const checkEmail = {};
     const emailCheck = await pool.query(sql.checkForEmail, [email]);
     if (emailCheck.rows[0].email_exists) {
