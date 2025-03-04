@@ -29,6 +29,7 @@ controller.checkForUserUsername = async function (username) {
     } else {
         checkUsername.usernameExists = false;
     }
+    return checkUsername;
 };
 
 controller.getUserById = async function (id) {
