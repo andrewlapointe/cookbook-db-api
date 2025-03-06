@@ -80,9 +80,15 @@ FROM recipes;
 queries.selectRecipeSearch = `
 SELECT *
 FROM recipes
-WHERE title % $1 OR description % $1
+WHERE title % $1 OR description % $1 OR ingredients % $1 OR instructions % $1 OR author % $1
 ORDER BY
-  GREATEST(similarity(title, $1), similarity(description, $1)) DESC
+  GREATEST(
+    similarity(title, $1), 
+    similarity(description, $1),     
+    similarity(ingredients, $1),
+    similarity(instructions, $1),
+    similarity(author, $1)
+    ) DESC
 LIMIT 50;
 `;
 
