@@ -161,6 +161,11 @@ RETURNING id AS ingredient_id;
 queries.selectAllUnits = `
 SELECT * FROM units;
 `;
+
+queries.selectUnit = `
+SELECT id from units
+WHERE name = $1;
+`;
 // =======================================================================
 
 // NOTES TABLE ===========================================================

@@ -177,7 +177,7 @@ controller.addRecipe = async function (req) {
                 false, // This should be added as a form input later
                 recipeId,
                 ingredientId,
-                unitId,
+                unitId.rows[0].id,
             ]);
         });
 
