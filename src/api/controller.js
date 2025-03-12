@@ -158,7 +158,6 @@ controller.addRecipe = async function (req) {
             ]);
             if (ingredinetCheck.rows.length == 0) {
                 let newIngredient = await pool.query(queries.addIngredient, [
-                    ingredient.id,
                     ingredient.name,
                 ]);
                 ingredientId = newIngredient[0].id;
