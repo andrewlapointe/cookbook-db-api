@@ -129,14 +129,22 @@ controller.addRecipe = async function (req) {
         ]);
         const recipeId = recipe_rows.rows[0].id;
 
-        const ingredients = {};
+        const ingredients = [];
 
-        for (let i = 0; i < ingredient.length; i++) {
-            ingredients[i] = {
-                name: ingredient[i],
-                quantity: ingredientAmount[i],
-                unit: ingredientUnit[i],
-            };
+        if (typeof ingredient === 'string') {
+            ingredients.push({
+                name: ingredient,
+                quantity: ingredientAmount,
+                unit: ingredientUnit,
+            });
+        } else {
+            for (let i = 0; i < ingredient.length; i++) {
+                ingredients.push({
+                    name: ingredient[i],
+                    quantity: ingredientAmount[i],
+                    unit: ingredientUnit[i],
+                });
+            }
         }
 
         console.log(ingredients);
