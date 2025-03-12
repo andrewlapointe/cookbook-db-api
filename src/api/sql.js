@@ -153,7 +153,7 @@ INSERT INTO ingredients
 (name)
 VALUES ($1)
 ON CONFLICT (name) DO NOTHING
-RETURNING id AS ingredient_id;
+RETURNING id;
 `;
 // =======================================================================
 
