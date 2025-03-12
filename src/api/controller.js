@@ -1,5 +1,6 @@
 const sql = require('./sql');
 const pool = require('../../database');
+const queries = require('./sql');
 
 const controller = {};
 
@@ -99,28 +100,82 @@ controller.getRecipesByUser = async function (req) {
 
 controller.addRecipe = async function (req) {
     const {
-        userId,
         recipeName,
+        author,
         description,
-        ingredients,
+        ingredient,
+        ingredientAmount,
+        ingredientUnit,
         instructions,
         cookTime,
         servings,
         imageURL,
-        author,
+        userId,
     } = req.body;
-    const data = await pool.query(sql.addRecipe, [
-        userId,
-        recipeName,
-        description,
-        ingredients,
-        instructions,
-        cookTime,
-        servings,
-        imageURL,
-        author,
-    ]);
-    return data;
+
+    try {
+        await pool.query('BEGIN');
+
+        // Insert recipe into recipe table
+        const recipe_rows = await pool.query(queries.addRecipe, [
+            userId,
+            recipeName,
+            description,
+            instructions,
+            cookTime,
+            servings,
+            imageURL,
+            author,
+        ]);
+        const recipeId = recipe_rows.rows[0].id;
+
+        const ingredients = {};
+
+        for (let i = 0; i < ingredient.length; i++) {
+            ingredients[i] = {
+                name: ingredient[i],
+                quantity: ingredientAmount[i],
+                unit: ingredientUnit[i],
+            };
+        }
+
+        await ingredients.forEach(async (ingredient) => {
+            let ingredientId;
+
+            // check if ingredient exists, add if not
+            let ingredinetCheck = await pool.query(queries.selectIngredient, [
+                ingredient.name,
+            ]);
+            if (ingredinetCheck.rows.length == 0) {
+                let newIngredient = await pool.query(queries.addIngredient, [
+                    ingredient.id,
+                    ingredient.name,
+                ]);
+                ingredientId = newIngredient[0].id;
+            } else {
+                ingredientId = ingredinetCheck[0].id;
+            }
+
+            // get unit id
+            let unitId = await pool.query(queries.selectAllUnits, [
+                recipe.unit,
+            ]);
+
+            // Add to recipe_ingredient for each ingredient
+            await pool.query(queries.addRecipeIngredient, [
+                recipe.quantity,
+                recipe.optional,
+                recipeId,
+                ingredientId,
+                unitId,
+            ]);
+        });
+
+        await pool.query('COMMIT');
+    } catch (error) {
+        await pool.query('ROLLBACK');
+        throw error;
+    }
 };
 
 controller.deleteRecipe = async function (req) {

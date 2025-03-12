@@ -71,6 +71,14 @@ WHERE id = $3;
 `;
 // =======================================================================
 
+// RECIPE_INGREDIENT TABLE ===============================================
+queries.addRecipeIngredient = `
+INSERT INTO recipe_ingredient
+(quantity, optional, recipe_id, ingredient_id, unit_id)
+VALUES ($1, $2, $3, $4, $5)
+`;
+// =======================================================================
+
 // RECIPE TABLE ==========================================================
 queries.selectAllRecipes = `
 SELECT *
@@ -106,9 +114,18 @@ LIMIT 1000;
 `;
 
 queries.addRecipe = `
-INSERT INTO recipes
-(user_id, title, description, ingredients, instructions, cooking_time, servings, image_url, author)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
+INSERT INTO recipes (
+      user_id,
+      title,
+      description,
+      instructions,
+      cooking_time,
+      servings,
+      image_url,
+      author
+  ) 
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+  RETURNING id;
 `;
 
 queries.deleteRecipe = `
@@ -119,6 +136,30 @@ queries.updateRecipe = `
 UPDATE recipes
 SET title = $1, description = $2, ingredients = $3, instructions = $4, cooking_time = $5, servings = $6, image_url = $7, author = $8
 WHERE id = $9
+`;
+// =======================================================================
+// INGREDIENTS TABLE =====================================================
+queries.selectAllIngredients = `
+SELECT * FROM ingredients;
+`;
+
+queries.selectIngredient = `
+SELECT id FROM ingredient
+WHERE name = $1; 
+`;
+
+queries.addIngredient = `
+INSERT INTO ingredients
+(name)
+VALUES ($1)
+ON CONFLICT (name) DO NOTHING
+RETURNING id AS ingredient_id;
+`;
+// =======================================================================
+
+// UNITS TABLE ===========================================================
+queries.selectAllUnits = `
+SELECT * FROM units;
 `;
 // =======================================================================
 
