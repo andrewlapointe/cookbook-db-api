@@ -144,7 +144,7 @@ SELECT * FROM ingredients;
 `;
 
 queries.selectIngredient = `
-SELECT id FROM ingredient
+SELECT id FROM ingredients
 WHERE name = $1; 
 `;
 
