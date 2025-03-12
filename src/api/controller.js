@@ -139,6 +139,8 @@ controller.addRecipe = async function (req) {
             };
         }
 
+        console.log(ingredients);
+
         await ingredients.forEach(async (ingredient) => {
             let ingredientId;
 
