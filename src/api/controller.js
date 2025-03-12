@@ -167,7 +167,7 @@ controller.addRecipe = async function (req) {
             }
 
             // get unit id
-            let unitId = await pool.query(queries.selectAllUnits, [
+            let unitId = await pool.query(queries.selectUnits, [
                 ingredient.unit,
             ]);
 
