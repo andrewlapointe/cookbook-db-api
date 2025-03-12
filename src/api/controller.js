@@ -160,7 +160,6 @@ controller.addRecipe = async function (req) {
                 let newIngredient = await pool.query(queries.addIngredient, [
                     ingredient.name,
                 ]);
-                console.log(newIngredient);
                 ingredientId = newIngredient.rows[0].id;
             } else {
                 ingredientId = ingredinetCheck.rows[0].id;
@@ -170,6 +169,7 @@ controller.addRecipe = async function (req) {
             let unitId = await pool.query(queries.selectUnit, [
                 ingredient.unit,
             ]);
+            console.log(unitId.rows);
 
             // Add to recipe_ingredient for each ingredient
             await pool.query(queries.addRecipeIngredient, [
