@@ -168,13 +168,13 @@ controller.addRecipe = async function (req) {
 
             // get unit id
             let unitId = await pool.query(queries.selectAllUnits, [
-                recipe.unit,
+                ingredient.unit,
             ]);
 
             // Add to recipe_ingredient for each ingredient
             await pool.query(queries.addRecipeIngredient, [
-                recipe.quantity,
-                recipe.optional,
+                ingredient.quantity,
+                false, // This should be added as a form input later
                 recipeId,
                 ingredientId,
                 unitId,
