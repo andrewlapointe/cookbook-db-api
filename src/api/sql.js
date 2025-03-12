@@ -164,7 +164,8 @@ SELECT * FROM units;
 
 queries.selectUnit = `
 SELECT id from units
-WHERE name = $1;
+WHERE name = $1
+RETURNING id;
 `;
 // =======================================================================
 
