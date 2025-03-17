@@ -156,7 +156,8 @@ RETURNING id;
 `;
 
 queries.selectRecipeIngredientsByID = `
-SELECT i.name, u.name, lt.quantity, lt.optional, u.abbreviation, u.unit_system, u.measure_type
+SELECT i.name AS ingredient, u.name AS unit, lt.quantity AS quantity, 
+lt.optional AS optional, u.abbreviation AS unit_abbreviation, u.unit_system, u.measure_type
 FROM recipe_ingredient lt
 JOIN ingredients i
 	ON i.id = lt.ingredient_id
