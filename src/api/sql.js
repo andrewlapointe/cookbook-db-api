@@ -154,6 +154,16 @@ VALUES ($1)
 ON CONFLICT (name) DO NOTHING
 RETURNING id;
 `;
+
+queries.selectRecipeIngredientsByID = `
+SELECT i.name, u.name, lt.quantity, lt.optional, u.abbreviation, u.unit_system, u.measure_type
+FROM recipe_ingredient lt
+JOIN ingredients i
+	ON i.id = lt.ingredient_id
+JOIN units u
+	ON u.id = lt.unit_id
+WHERE lt.recipe_id = $1;
+`;
 // =======================================================================
 
 // UNITS TABLE ===========================================================
