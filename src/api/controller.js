@@ -115,6 +115,7 @@ controller.addRecipe = async function (req) {
 
     try {
         await pool.query('BEGIN');
+        await pool.query('SET CONSTRAINTS ALL DEFERRED;');
 
         // Insert recipe into recipe table
         const recipe_rows = await pool.query(queries.addRecipe, [
