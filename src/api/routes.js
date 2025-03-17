@@ -95,4 +95,9 @@ router.put('/recipe/edit', utilities.checkJWTToken, async (req, res) => {
     res.send(data);
 });
 
+router.get('/units/all', async (req, res) => {
+    const data = await controller.getAllUnits();
+    res.send(data);
+});
+
 module.exports = router;

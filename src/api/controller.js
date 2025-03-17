@@ -218,4 +218,9 @@ controller.editRecipe = async function (req) {
     ]);
 };
 
+controller.getAllUnits = async function () {
+    const units = await pool.query(sql.getAllUnits);
+    return units;
+};
+
 module.exports = controller;
