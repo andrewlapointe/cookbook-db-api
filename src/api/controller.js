@@ -148,16 +148,17 @@ controller.addRecipe = async function (req) {
                 });
             }
         }
-        await ingredients.forEach(async (ingredient) => {
+
+        for (const ing of ingredients) {
             let ingredientId;
 
             // check if ingredient exists, add if not
-            let ingredinetCheck = await pool.query(queries.selectIngredient, [
-                ingredient.name,
+            const ingredinetCheck = await pool.query(queries.selectIngredient, [
+                ing.name,
             ]);
             if (ingredinetCheck.rows.length == 0) {
-                let newIngredient = await pool.query(queries.addIngredient, [
-                    ingredient.name,
+                const newIngredient = await pool.query(queries.addIngredient, [
+                    ing.name,
                 ]);
                 ingredientId = newIngredient.rows[0].id;
             } else {
@@ -165,22 +166,19 @@ controller.addRecipe = async function (req) {
             }
 
             // get unit id
-            let unitId = await pool.query(queries.selectUnit, [
-                ingredient.unit,
-            ]);
+            const unitId = await pool.query(queries.selectUnit, [ing.unit]);
 
             // Add to recipe_ingredient for each ingredient
             await pool.query(queries.addRecipeIngredient, [
-                ingredient.quantity,
+                ing.quantity,
                 false, // This should be added as a form input later
                 recipeId,
                 ingredientId,
                 unitId.rows[0].id,
             ]);
-        });
+        }
 
-        const commit = await pool.query('COMMIT');
-        console.log(`Commit: ${commit}`);
+        await pool.query('COMMIT');
         return { id: recipeId };
     } catch (error) {
         await pool.query('ROLLBACK');
