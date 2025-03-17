@@ -128,6 +128,8 @@ controller.addRecipe = async function (req) {
             imageURL,
             author,
         ]);
+
+        console.log(recipe_rows);
         const recipeId = recipe_rows.rows[0].id;
 
         const ingredients = [];
@@ -180,6 +182,7 @@ controller.addRecipe = async function (req) {
 
         await pool.query('COMMIT');
         console.log('SUCCESS');
+        return recipeId;
     } catch (error) {
         await pool.query('ROLLBACK');
         throw error;
