@@ -182,7 +182,7 @@ controller.addRecipe = async function (req) {
 
         await pool.query('COMMIT');
         console.log('SUCCESS');
-        return recipeId;
+        return { id: recipeId };
     } catch (error) {
         await pool.query('ROLLBACK');
         throw error;
