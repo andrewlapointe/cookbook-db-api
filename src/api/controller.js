@@ -219,7 +219,7 @@ controller.editRecipe = async function (req) {
 };
 
 controller.getAllUnits = async function () {
-    const units = await pool.query(sql.getAllUnits);
+    const units = await pool.query(sql.selectAllUnits);
     return units;
 };
 
