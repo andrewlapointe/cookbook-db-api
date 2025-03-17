@@ -147,9 +147,6 @@ controller.addRecipe = async function (req) {
                 });
             }
         }
-
-        console.log(ingredients);
-
         await ingredients.forEach(async (ingredient) => {
             let ingredientId;
 
@@ -167,11 +164,9 @@ controller.addRecipe = async function (req) {
             }
 
             // get unit id
-            console.log('Unit: ' + ingredient.unit);
             let unitId = await pool.query(queries.selectUnit, [
                 ingredient.unit,
             ]);
-            console.log(unitId.rows);
 
             // Add to recipe_ingredient for each ingredient
             await pool.query(queries.addRecipeIngredient, [
@@ -184,6 +179,7 @@ controller.addRecipe = async function (req) {
         });
 
         await pool.query('COMMIT');
+        console.log('SUCCESS');
     } catch (error) {
         await pool.query('ROLLBACK');
         throw error;
