@@ -77,6 +77,10 @@ INSERT INTO recipe_ingredient
 (quantity, optional, recipe_id, ingredient_id, unit_id)
 VALUES ($1, $2, $3, $4, $5)
 `;
+
+// queries.updateRecipeIngredient {
+
+// }
 // =======================================================================
 
 // RECIPE TABLE ==========================================================
@@ -133,8 +137,8 @@ DELETE FROM recipes WHERE id=$1;
 
 queries.updateRecipe = `
 UPDATE recipes
-SET title = $1, description = $2, ingredients = $3, instructions = $4, cooking_time = $5, servings = $6, image_url = $7, author = $8
-WHERE id = $9
+SET title = $1, description = $2, instructions = $3, cooking_time = $4, servings = $5, image_url = $6, author = $7
+WHERE id = $8
 `;
 // =======================================================================
 // INGREDIENTS TABLE =====================================================

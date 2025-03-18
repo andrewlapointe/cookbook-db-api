@@ -201,27 +201,93 @@ controller.deleteRecipe = async function (req) {
 
 controller.editRecipe = async function (req) {
     const {
+        id,
         recipeName,
+        author,
         description,
-        ingredients,
+        ingredient,
+        ingredientAmount,
+        ingredientUnit,
         instructions,
         cookTime,
         servings,
         imageURL,
-        author,
-        id,
+        userId,
     } = req.body;
-    const data = await pool.query(sql.updateRecipe, [
-        recipeName,
-        description,
-        ingredients,
-        instructions,
-        cookTime,
-        servings,
-        imageURL,
-        author,
-        id,
-    ]);
+    try {
+        await pool.query('BEGIN');
+        await pool.query('SET CONSTRAINTS ALL DEFERRED;');
+
+        const recipeId = id;
+
+        // Edit Recipe Table
+        const recipe_rows = await pool.query(queries.updateRecipe, [
+            recipeName,
+            description,
+            instructions,
+            cookTime,
+            servings,
+            imageURL,
+            author,
+            recipeId,
+        ]);
+
+        const ingredients = [];
+        if (typeof ingredient === 'string') {
+            ingredients.push({
+                name: ingredient,
+                quantity: ingredientAmount,
+                unit: ingredientUnit,
+            });
+        } else {
+            for (let i = 0; i < ingredient.length; i++) {
+                ingredients.push({
+                    name: ingredient[i],
+                    quantity: ingredientAmount[i],
+                    unit: ingredientUnit[i],
+                });
+            }
+        }
+
+        await pool.query(
+            `DELETE FROM recipe_ingredient WHERE recipe_id=${recipeId}`
+        );
+
+        for (const ing of ingredients) {
+            let ingredientId;
+
+            // check if ingredient exists, add if not
+            const ingredinetCheck = await pool.query(queries.selectIngredient, [
+                ing.name,
+            ]);
+            if (ingredinetCheck.rows.length == 0) {
+                const newIngredient = await pool.query(queries.addIngredient, [
+                    ing.name,
+                ]);
+                ingredientId = newIngredient.rows[0].id;
+            } else {
+                ingredientId = ingredinetCheck.rows[0].id;
+            }
+
+            // get unit id
+            const unitId = await pool.query(queries.selectUnit, [ing.unit]);
+
+            // Add to recipe_ingredient for each ingredient
+            await pool.query(queries.addRecipeIngredient, [
+                ing.quantity,
+                false, // This should be added as a form input later
+                recipeId,
+                ingredientId,
+                unitId.rows[0].id,
+            ]);
+        }
+
+        await pool.query('COMMIT');
+        return { id: recipeId };
+    } catch (error) {
+        await pool.query('ROLLBACK');
+        throw error;
+    }
 };
 
 controller.getAllUnits = async function () {
