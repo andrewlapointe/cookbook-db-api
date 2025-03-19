@@ -57,6 +57,69 @@ router.put('/user/edit', utilities.checkJWTToken, async (req, res) => {
     res.send(response);
 });
 
+router.get(
+    '/user/:user_id/lists/all',
+    utilities.checkJWTToken,
+    async (req, res) => {
+        const response = await controller.getAllUserLists(req.params.user_id);
+        res.send(response);
+    }
+);
+
+router.get('/user/list/:list_id', utilities.checkJWTToken, async (req, res) => {
+    const response = await controller.getUserListById(req.params.list_id);
+    res.send(response);
+});
+
+router.post('/user/list/new', utilities.checkJWTToken, async (req, res) => {
+    const response = await controller.createUserList(
+        req.body.user_id,
+        req.body.list_name
+    );
+    res.send(response);
+});
+
+router.post(
+    '/user/list/addrecipe',
+    utilities.checkJWTToken,
+    async (req, res) => {
+        const response = await controller.addRecipeToList(
+            req.body.list_id,
+            req.body.recipe_id
+        );
+        res.send(response);
+    }
+);
+
+router.put('/user/list/editname', utilities.checkJWTToken, async (req, res) => {
+    const response = await controller.editListName(
+        req.body.list_id,
+        req.body.new_name
+    );
+    res.send(response);
+});
+
+router.delete(
+    '/user/list/delete',
+    utilities.checkJWTToken,
+    async (req, res) => {
+        const response = await controller.deleteList(req.body.list_id);
+        res.send(response);
+    }
+);
+
+router.delete(
+    '/user/list/removerecipe',
+    utilities.checkJWTToken,
+    async (req, res) => {
+        const response = await controller.removeRecipeFromList(
+            req.body.recipe_id,
+            req.body.list_id
+        );
+        res.send(response);
+    }
+);
+
 // RECIPE TABLE
 
 router.get('/recipe/all', async (req, res) => {

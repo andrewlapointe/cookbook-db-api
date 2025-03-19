@@ -69,6 +69,61 @@ UPDATE users
 SET username = $1, email = $2
 WHERE id = $3;
 `;
+
+queries.getAllUserLists = `
+SELECT list_name
+FROM user_lists
+WHERE user_id = $1;
+`;
+
+queries.getListName = `
+SELECT list_name
+FROM user_lists
+WHERE id = $1;
+`;
+
+queries.getListRecipes = `
+SELECT recipe_id
+FROM list_recipes
+WHERE list_id = $1;
+`;
+
+queries.createUserList = `
+INSERT INTO user_lists
+(user_id, list_name)
+VALUES ($1, $2);
+`;
+
+queries.checkForRecipeInList = `
+SELECT EXISTS (
+  SELECT 1
+  FROM list_recipes
+  WHERE list_id = $1 AND recipe_id = $2
+  ) AS item_exists;
+`;
+
+queries.addRecipeToList = `
+INSERT INTO list_recipes
+(list_id, recipe_id)
+VALUES ($1, $2);
+`;
+
+queries.editListName = `
+UPDATE user_lists
+SET list_name = $1
+WHERE id = $1;
+`;
+
+queries.deleteList = `
+DELETE FROM user_lists
+WHERE id = $1;
+`;
+
+queries.removeRecipeFromList = `
+DELETE FROM list_recipes
+WHERE recipe_id = $1 AND list_id = $2;
+`;
+
 // =======================================================================
 
 // RECIPE_INGREDIENT TABLE ===============================================

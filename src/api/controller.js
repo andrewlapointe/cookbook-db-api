@@ -74,6 +74,51 @@ controller.editUser = async function (reqBody) {
     }
 };
 
+controller.getAllUserLists = async function (user_id) {
+    return await pool.query(sql.getAllUserLists, [user_id]);
+};
+
+controller.getUserListById = async function (list_id) {
+    const list = {};
+    list.name = await pool.query(sql.getListName, [list_id]);
+    list.recipes = [];
+    const recipes = await pool.query(sql.getListRecipes, [list_id]);
+    recipes.forEach((recipe) => {
+        list.recipes.push(recipe.recipe_id);
+    });
+
+    return list;
+};
+
+controller.createUserList = async function (user_id, list_name) {
+    return await pool.query(sql.createUserList, [user_id, list_name]);
+};
+
+controller.addRecipeToList = async function (list_id, recipe_id) {
+    const inList = await pool.query(sql.checkForRecipeInList, [
+        list_id,
+        recipe_id,
+    ]);
+
+    if (inList.rows[0].item_exists) {
+        return await pool.query(sql.addRecipeToList, [list_id, recipe_id]);
+    } else {
+        return 'Recipe Already In List';
+    }
+};
+
+controller.editListName = async function (list_id, new_name) {
+    return await pool.query(sql.editListName, [list_id, new_name]);
+};
+
+controller.deleteList = async function (list_id) {
+    return await pool.query(sql.deleteList, [list_id]);
+};
+
+controller.removeRecipeFromList = async function (recipe_id, list_id) {
+    return await pool.query(sql.removeRecipeFromList, [recipe_id, list_id]);
+};
+
 // RECIPES TABLE ===========================================
 
 controller.getAllRecipes = async function () {
