@@ -72,6 +72,8 @@ router.get('/user/list/:list_id', utilities.checkJWTToken, async (req, res) => {
 });
 
 router.post('/user/list/new', utilities.checkJWTToken, async (req, res) => {
+    console.log('In route');
+    console.log(req.body);
     const response = await controller.createUserList(
         req.body.user_id,
         req.body.list_name
