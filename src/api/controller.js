@@ -91,7 +91,8 @@ controller.getUserListById = async function (list_id) {
 };
 
 controller.createUserList = async function (user_id, list_name) {
-    return await pool.query(sql.createUserList, [user_id, list_name]);
+    const result = await pool.query(sql.createUserList, [user_id, list_name]);
+    return result;
 };
 
 controller.addRecipeToList = async function (list_id, recipe_id) {
