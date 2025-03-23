@@ -8,6 +8,7 @@ Util.checkJWTToken = (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
         console.log(err);
+        console.log('verified token');
         if (err) return res.sendStatus(403);
         req.user = user;
         next();
