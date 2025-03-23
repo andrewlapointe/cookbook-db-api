@@ -28,6 +28,7 @@ app.use(bodyParser.json());
 app.use(
     '/',
     (req, res, next) => {
+        console.log(req.url);
         console.log('Request Received');
         console.log(req.body);
         next();
