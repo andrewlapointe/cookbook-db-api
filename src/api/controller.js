@@ -91,7 +91,6 @@ controller.getUserListById = async function (list_id) {
 };
 
 controller.createUserList = async function (user_id, list_name) {
-    console.log('In controller');
     const result = await pool.query(sql.createUserList, [user_id, list_name]);
     return result;
 };

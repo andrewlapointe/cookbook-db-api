@@ -71,7 +71,7 @@ WHERE id = $3;
 `;
 
 queries.getAllUserLists = `
-SELECT list_name
+SELECT list_name, id
 FROM user_lists
 WHERE user_id = $1;
 `;
