@@ -91,7 +91,8 @@ WHERE list_id = $1;
 queries.createUserList = `
 INSERT INTO user_lists
 (user_id, list_name)
-VALUES ($1, $2);
+VALUES ($1, $2)
+RETURNING id;
 `;
 
 queries.checkForRecipeInList = `
