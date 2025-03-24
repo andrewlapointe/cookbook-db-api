@@ -79,15 +79,15 @@ controller.getAllUserLists = async function (user_id) {
 };
 
 controller.getUserListById = async function (list_id) {
-    const list = {};
-    list.name = await pool.query(sql.getListName, [list_id]);
-    list.recipes = [];
+    // const list = {};
+    // list.name = await pool.query(sql.getListName, [list_id]);
+    // list.recipes = [];
     const recipes = await pool.query(sql.getListRecipes, [list_id]);
-    recipes.forEach((recipe) => {
-        list.recipes.push(recipe.recipe_id);
-    });
+    // recipes.forEach((recipe) => {
+    //     list.recipes.push(recipe.recipe_id);
+    // });
 
-    return list;
+    return recipes;
 };
 
 controller.createUserList = async function (user_id, list_name) {
