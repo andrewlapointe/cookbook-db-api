@@ -117,7 +117,12 @@ controller.deleteList = async function (list_id) {
 };
 
 controller.removeRecipeFromList = async function (recipe_id, list_id) {
-    return await pool.query(sql.removeRecipeFromList, [recipe_id, list_id]);
+    const data = await pool.query(sql.removeRecipeFromList, [
+        recipe_id,
+        list_id,
+    ]);
+    console.log(data);
+    return data;
 };
 
 // RECIPES TABLE ===========================================
