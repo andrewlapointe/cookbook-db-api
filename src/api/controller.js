@@ -89,16 +89,13 @@ controller.createUserList = async function (user_id, list_name) {
 };
 
 controller.addRecipeToList = async function (list_id, recipe_id) {
-    console.log('List ID: ' + list_id);
-    console.log('Recipe ID: ' + recipe_id);
-
     const inList = await pool.query(sql.checkForRecipeInList, [
         list_id,
         recipe_id,
     ]);
-    console.log(inList);
 
     if (inList.rows[0].item_exists) {
+        console.log('Running Query');
         return await pool.query(sql.addRecipeToList, [list_id, recipe_id]);
     } else {
         return 'Recipe Already In List';
