@@ -83,8 +83,9 @@ WHERE id = $1;
 `;
 
 queries.getListRecipes = `
-SELECT recipe_id
-FROM list_recipes
+SELECT l.recipe_id, r.title
+FROM list_recipes l
+LEFT JOIN recipes r
 WHERE list_id = $1;
 `;
 
