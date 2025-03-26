@@ -94,7 +94,7 @@ controller.addRecipeToList = async function (list_id, recipe_id) {
         recipe_id,
     ]);
     console.log('Exists:' + inList.rows[0].item_exists);
-    if (inList.rows[0].item_exists) {
+    if (!inList.rows[0].item_exists) {
         console.log('Running Query');
         return await pool.query(sql.addRecipeToList, [list_id, recipe_id]);
     } else {
