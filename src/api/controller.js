@@ -79,14 +79,7 @@ controller.getAllUserLists = async function (user_id) {
 };
 
 controller.getUserListById = async function (list_id) {
-    // const list = {};
-    // list.name = await pool.query(sql.getListName, [list_id]);
-    // list.recipes = [];
     const recipes = await pool.query(sql.getListRecipes, [list_id]);
-    // recipes.forEach((recipe) => {
-    //     list.recipes.push(recipe.recipe_id);
-    // });
-
     return recipes;
 };
 
@@ -96,10 +89,14 @@ controller.createUserList = async function (user_id, list_name) {
 };
 
 controller.addRecipeToList = async function (list_id, recipe_id) {
+    console.log('List ID: ' + list_id);
+    console.log('Recipe ID: ' + recipe_id);
+
     const inList = await pool.query(sql.checkForRecipeInList, [
         list_id,
         recipe_id,
     ]);
+    console.log(inList);
 
     if (inList.rows[0].item_exists) {
         return await pool.query(sql.addRecipeToList, [list_id, recipe_id]);
