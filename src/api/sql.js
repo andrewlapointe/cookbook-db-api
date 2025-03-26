@@ -86,7 +86,8 @@ queries.getListRecipes = `
 SELECT l.recipe_id, r.title
 FROM list_recipes l
 LEFT JOIN recipes r
-WHERE list_id = $1;
+  ON r.id = l.recipe_id
+WHERE l.list_id = $1;
 `;
 
 queries.createUserList = `
