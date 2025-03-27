@@ -70,10 +70,19 @@ SET username = $1, email = $2
 WHERE id = $3;
 `;
 
+// queries.getAllUserLists = `
+// SELECT list_name, id
+// FROM user_lists
+// WHERE user_id = $1;
+// `;
+
 queries.getAllUserLists = `
-SELECT list_name, id
-FROM user_lists
-WHERE user_id = $1;
+SELECT ul.list_name, json_agg(r.title) AS recipes
+FROM user_lists ul
+LEFT JOIN list_recipes lr ON ul.id = lr.list_id
+LEFT JOIN recipes r ON r.id = lr.recipe_id
+WHERE ul.user_id = $1
+GROUP BY ul.list_name;
 `;
 
 queries.getListName = `
