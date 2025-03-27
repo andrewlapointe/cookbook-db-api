@@ -82,7 +82,7 @@ FROM user_lists ul
 LEFT JOIN list_recipes lr ON ul.id = lr.list_id
 LEFT JOIN recipes r ON r.id = lr.recipe_id
 WHERE ul.user_id = $1
-GROUP BY ul.list_name;
+GROUP BY ul.list_name, ul.id;
 `;
 
 queries.getListName = `
