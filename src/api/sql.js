@@ -77,7 +77,7 @@ WHERE id = $3;
 // `;
 
 queries.getAllUserLists = `
-SELECT ul.list_name, ul.id, json_agg(r.title) AS recipes
+SELECT ul.list_name, ul.id, json_agg(r.title, r.id) AS recipes
 FROM user_lists ul
 LEFT JOIN list_recipes lr ON ul.id = lr.list_id
 LEFT JOIN recipes r ON r.id = lr.recipe_id
@@ -91,6 +91,7 @@ FROM user_lists
 WHERE id = $1;
 `;
 
+// DEPRECATED
 queries.getListRecipes = `
 SELECT l.recipe_id, r.title
 FROM list_recipes l
