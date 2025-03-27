@@ -77,7 +77,7 @@ WHERE id = $3;
 // `;
 
 queries.getAllUserLists = `
-SELECT ul.list_name, json_agg(r.title) AS recipes
+SELECT ul.list_name, ul.id, json_agg(r.title) AS recipes
 FROM user_lists ul
 LEFT JOIN list_recipes lr ON ul.id = lr.list_id
 LEFT JOIN recipes r ON r.id = lr.recipe_id
