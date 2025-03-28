@@ -134,7 +134,6 @@ WHERE id = $1;
 `;
 
 queries.removeRecipeFromList = `
-IF EXISTS
 DELETE FROM list_recipes
 WHERE recipe_id = $1 AND list_id = $2;
 `;
